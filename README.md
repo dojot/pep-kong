@@ -2,27 +2,32 @@
 
 ## pep-Kong
 
-PEP-Kong is a lua plugin for Kong, a open-source API gateway.
-PEP stand for 'Policy Enforcement Point'.
-PEP-Kong extract information about the user from its JWT token and send these
- Information, together with HTTP request method and URL, to a PDP.
- If the PDP verdict negate the access, pep-Kong throw a 'forbidden' page for the user.
- Otherwise, if the PDP permits the access, pep-Kong let the request pass.
+PEP-Kong is a lua plugin for Kong, an open-source API gateway.
+PEP stands for 'Policy Enforcement Point'.
+PEP-Kong extracts information about the user from its JWT token and sends those,
+ together with HTTP request method and URL, to a PDP.
+ If the PDP verdict denies the access, pep-Kong throws a 'forbidden' page for the user.
+ Otherwise, if the PDP permits the access, pep-Kong lets the request pass.
 
 ### installation
-The docker container take care of plugin installation.
+The docker container takes care of plugin installation.
 So, skip this step if you are running PEP-Kong with docker.
 
-Build the plugin. Move to the directory with the rockspec file and run the command:
+Build the plugin. Move to the repository root directory and run the command:
 
-  luarocks make
+```shell
+luarocks make
+```
 
-Edit Kong configuration file at /etc/Kong/kong.conf. Add the following line.
+Edit Kong configuration file.
 
-	custom_plugins = pepkong
-
+```shell
+echo "custom_plugins = pepkong" >> /etc/Kong/kong.conf
+```
 If Kong is running, reload to apply the changes.
-	Kong reload
+```shell
+kong reload
+```
 
 ### Running
 
@@ -31,9 +36,17 @@ PEP-Kong expects a running PDP with a REST-JSON API.
 The component  [PDP-ws](https://github.com/dojot/pdp-ws) is fully compatible with PEP-Kong
 
 PEP-Kong expects JWT authentication. The JWT must have a field named 'profile', representing the user role.
-The component [auth](https://github.com/dojot/auth) generate PEP-Kong compatible JWT tokens.
+The component [auth](https://github.com/dojot/auth) generates PEP-Kong compatible JWT tokens.
 
-PEP-Kong don't validate JWT signature. Kong have a nice pré-installed plugin for this task: [ JWT-Kong](https://getkong.org/plugins/jwt/)
+PEP-Kong  doesn't validate JWT signature. Kong have a nice pre-installed plugin for this task: [ JWT-Kong](https://getkong.org/plugins/jwt/)
 
 Now, you should configure what endpoints PEP-Kong (and JWT-Kong) should guard.
-If you are using PEP-Kong with Dojot, run the configuration script  ''./kong.config.sh' located on the [docker-compose](https://github.com/dojot/docker-compose) repository
+If you are using PEP-Kong with Dojot, run the configuration script  
+```shell
+./kong.config.sh
+```
+located on the [docker-compose]
+(https://github.com/dojot/docker-compose) repository
+
+otherwise, please refer to kong's own documentation: [here](https://getkong.org/plugins/jwt/) and [here](https://getkong.org/docs/0.11.x/plugin-development/plugin-configuration/)
+PEP-kong plugin have only one parameter: 'pdpUrl', the parameter expects an http URL for a running PDP.
