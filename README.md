@@ -33,15 +33,16 @@ kong reload
 
 
 PEP-Kong expects a running PDP with a REST-JSON API.
-The component  [PDP-ws](https://github.com/dojot/pdp-ws) is fully compatible with PEP-Kong
 
-PEP-Kong expects JWT authentication. The JWT must have a field named 'profile', representing the user role.
-The component [auth](https://github.com/dojot/auth) generates PEP-Kong compatible JWT tokens.
+PEP-Kong expects JWT authentication. If the configuration 'pdpMode' is set to 'JSON_XACML',
+the JWT must have a field named 'profile', representing the user role.
 
-PEP-Kong  doesn't validate JWT signature. Kong have a nice pre-installed plugin for this task: [ JWT-Kong](https://getkong.org/plugins/jwt/)
+The component [auth](https://github.com/dojot/auth) is fully compatible with PEP-Kong
+
+PEP-Kong  doesn't validate JWT signature. Kong have a nice pre-installed plugin for this task: [JWT-Kong](https://getkong.org/plugins/jwt/)
 
 Now, you should configure what endpoints PEP-Kong (and JWT-Kong) should guard.
-If you are using PEP-Kong with Dojot, run the configuration script  
+If you are using PEP-Kong with Dojot, run the configuration script
 ```shell
 ./kong.config.sh
 ```
@@ -49,4 +50,13 @@ located on the [docker-compose]
 (https://github.com/dojot/docker-compose) repository
 
 otherwise, please refer to kong's own documentation: [here](https://getkong.org/plugins/jwt/) and [here](https://getkong.org/docs/0.11.x/plugin-development/plugin-configuration/)
-PEP-kong plugin have only one parameter: 'pdpUrl', the parameter expects an http URL for a running PDP.
+
+
+* PEP-Kong plugin have two parameter:
+	* 'pdpUrl', the parameter expects an HTTP URL for a running PDP.
+	* 'pdpMode', the format the PDP expect the request. Option are:
+		* 'JWTForward' : the complete JWT, with the accessed path and method, is sent to the PDP.
+ This is the preferred method, as the PDP will have more information to make a decision.
+ Use this mode if your PDP have support. Dojot/Auth [auth](HTTPS://github.com/dojot/auth) is a JWTForward capable PDP.
+		* 'JSON_XACML' : PEP-Kong will try you extract the user profile from the JWT.
+The profile, path and method is sent to the PDP in a JSON-like XACML standard.
