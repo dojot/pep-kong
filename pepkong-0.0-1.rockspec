@@ -20,7 +20,6 @@ build = {
     ["kong.plugins.pepkong.schema"] = "src/schema.lua",
     ["kong.plugins.pepkong.utils"] = "src/utils.lua",
     ["kong.plugins.pepkong.pdpsender"] = "src/PDPSender.lua",
-    ["kong.plugins.pepkong.pdputils"] = "src/PDPUtils.lua",
-    ["kong.plugins.pepkong.jwtparser"] = "src/JWTparser.lua"
+    ["kong.plugins.pepkong.pdputils"] = "src/PDPUtils.lua"
   }
 }

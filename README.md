@@ -54,9 +54,7 @@ otherwise, please refer to kong's own documentation: [here](https://getkong.org/
 
 * PEP-Kong plugin have two parameter:
 	* 'pdpUrl', the parameter expects an HTTP URL for a running PDP.
-	* 'pdpMode', the format the PDP expect the request. Option are:
+	* 'pdpMode', the format the PDP expect the request. Fon now, there is only one option:
 		* 'JWTForward' : the complete JWT, with the accessed path and method, is sent to the PDP.
  This is the preferred method, as the PDP will have more information to make a decision.
  Use this mode if your PDP have support. Dojot/Auth [auth](HTTPS://github.com/dojot/auth) is a JWTForward capable PDP.
-		* 'JSON_XACML' : PEP-Kong will try you extract the user profile from the JWT.
-The profile, path and method is sent to the PDP in a JSON-like XACML standard.
