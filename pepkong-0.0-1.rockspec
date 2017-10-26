@@ -15,13 +15,11 @@ dependencies = {
 build = {
   type = "builtin",
   modules = {
-    ["kong.plugins.pepkong.pepmain"] = "src/pepmain.lua",
+    ["kong.plugins.pepkong.pepmain"] = "src/PEPMain.lua",
     ["kong.plugins.pepkong.handler"] = "src/handler.lua",
     ["kong.plugins.pepkong.schema"] = "src/schema.lua",
     ["kong.plugins.pepkong.utils"] = "src/utils.lua",
-    ["kong.plugins.pepkong.keypass"] = "src/keypass.lua",
-    ["kong.plugins.pepkong.kongxml.utils"] = "src/KongXML/XACML_Utils.lua",
-    ["kong.plugins.pepkong.kongxml.xmlsimple"] = "src/KongXML/xmlSimple.lua",
-    ["kong.plugins.pepkong.jwtparser"] = "src/JWTparser.lua"
+    ["kong.plugins.pepkong.pdpsender"] = "src/PDPSender.lua",
+    ["kong.plugins.pepkong.pdputils"] = "src/PDPUtils.lua"
   }
 }
